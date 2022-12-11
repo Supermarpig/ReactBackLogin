@@ -10,9 +10,9 @@ function App() {
   const outlet = useRoutes(router)
   return (
     <div className="App">
-      <Link to="/Home">Home</Link>
+      {/* <Link to="/Home">Home</Link>
       <Link to="/About">About</Link>
-      <Link to="/User">User</Link>
+      <Link to="/User">User</Link> */}
 
       {/* 佔位符組件， 類似於窗口，用來展示組件的，有點像VUE中的Router-view*/}
       {/* <Outlet></Outlet> */}
