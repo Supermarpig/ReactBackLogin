@@ -31,10 +31,14 @@ typeScript
     "redux": "^4.2.0",
     "reset-css": "^5.0.1"
 ```
-貼過來然後 下載 npm i 
-
-項目啟動  npm run dev
-
+貼過來然後 下載 
+```
+npm i 
+```
+項目啟動  
+```
+npm run dev
+```
 創建成功~~ 
 
 完善命令：
