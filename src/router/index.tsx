@@ -2,6 +2,7 @@ import React,{lazy} from "react"
 import Home from "../views/Home"
 // import About from "../views/About"
 // import User from "../views/User"
+import Login from "../views/Login"
 const About =lazy(()=>import("../views/Page301"))
 const User =lazy(()=>import("../views/User"))
 const Page1 =lazy(()=>import("../views/Page1"))
@@ -43,6 +44,10 @@ const routes =[
     ]
 },
 //嵌套路由 結束-------------------
+{
+    path:"/login",
+    element: <Login />
+},
 //假設User隨便輸入不是裡面的網址  返回page1 ，專門去寫一個404頁面也可以
 {
     path:"*",

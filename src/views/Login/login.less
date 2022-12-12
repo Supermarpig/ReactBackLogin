@@ -1,0 +1,34 @@
+.loginbox{
+    //控制表單元素樣式
+    .ant-input, .ant-input-password{
+        background-color: rgba(255,255,255,0);
+        border-color: #1890ff;
+        color:#FFFFFF;
+        height: 38px;
+    }
+    .ant-input-password .ant-input{
+        height: 28px;
+    }
+    .ant-input::-webkit-input-placeholder{
+        // color: #1890ff;
+        color: #1890ff;
+        opacity: .5;
+    }
+    //對眼睛圖標控制
+    .ant-input-password-icon,.ant-input-password-icon:hover{
+        color:#1890ff;
+    }
+    //控制驗證碼盒子
+    .captchaBox{
+        display: flex;
+        .captchaImg{
+            margin-left: 20px;
+            cursor:pointer; //移到上面變成手指頭
+        } 
+    }
+
+    //控制登錄按鈕
+    .loginBtn{
+        height: 38px;
+    }
+}
