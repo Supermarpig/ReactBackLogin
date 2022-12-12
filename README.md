@@ -151,7 +151,7 @@ npm i -D @type/node
 把 引入path 換成"import * as path from "path"就可以了;
 
 
-# 5.2 配置路徑別名的提示
+### 5.2 配置路徑別名的提示
 
 發現 打@/ 沒有路徑的提示
 
@@ -172,9 +172,9 @@ npm i -D @type/node
 
 -------------------------------------------------------------------------------------------------
 
-## 六、 scss模塊化
+# 六、 scss模塊化
 
-# 6.1 scss 的進一步使用
+## 6.1 scss 的進一步使用
 
 src下新建compoment文件夾 然後再新增 Comp1 及 Comp2 兩個文件夾
 
@@ -252,7 +252,7 @@ export default App
 
 
 -------------------------------------------------------------------------------------------------
-## 七、 Antd Design 初步引入
+# 七、 Antd Design 初步引入
 
 安裝 Antd Design
 
@@ -302,7 +302,7 @@ function App() {
 export default App
 ```
 -------------------------------------------------------------------------------------------------------------
-## 八、配置 Antd Design 樣式自動案需求引入
+# 八、配置 Antd Design 樣式自動案需求引入
 
 antd的 4.X版本 已經支援組件 按需求引入，我們只需要解決樣式上的自動按需求引入即可
 
@@ -338,8 +338,8 @@ npm i less@2.7.1 -D
 
 ---------------------------------------------------------------------------------------------------------------
 
-## 九、React 路由 -- 第一種配置方案 (舊項目中的寫法)
-# 9.1 初步展示
+# 九、React 路由 -- 第一種配置方案 (舊項目中的寫法)
+## 9.1 初步展示
 
 我們在這裡模擬 Vue 中的home 和 about 兩個組件展示：
 
@@ -383,7 +383,7 @@ const baseRouter =() =>(
 
 export default baseRouter
 ```
-# 9.2 編程式導航--設置菜單點及跳轉
+## 9.2 編程式導航--設置菜單點及跳轉
 
 /src/App.tsx中，使用<link/>組件進行跳轉：
 
@@ -406,7 +406,7 @@ import { Outlet,Link} from 'react-router-dom'
 }
 ```
 
-# 9.3 路由重定向
+## 9.3 路由重定向
 
 
 
@@ -483,7 +483,7 @@ function App() {
 
 export default App
 ```
-# 9.5 路由第二種方式 -路由懶加載
+## 9.5 路由第二種方式 -路由懶加載
 ```
 import Home from "../views/Home"
 import About from "../views/About"
@@ -554,7 +554,7 @@ const withLoadingComponent =(comp:JSX.Element) =>(
 ```
 
 -----------------------------------------------------------------------------------------------------
-## 十、首頁布局的解決方案(含側邊欄)
+# 十、首頁布局的解決方案(含側邊欄)
 
 
 去
@@ -665,7 +665,7 @@ export default App;
 
 ---------------------------------------------------------------------------------------------------------
 
-## 調整頁面右側結構樣式的調整
+# 調整頁面右側結構樣式的調整
 
 
 ```
@@ -749,7 +749,7 @@ export default View;
 ```
 
 ------------------------------------------------------------------------------------------------
-## 點擊跳轉 -點擊左邊側邊攔 獲取到路徑
+# 點擊跳轉 -點擊左邊側邊攔 獲取到路徑
 
 
 
@@ -873,7 +873,7 @@ import { Outlet,useNavigate} from "react-router-dom"
 灑花~
 
 -------------------------------------------------------------------------------------------------------
-## 增加功能 點擊其他Menu時，其他Menu會關閉
+# 增加功能 點擊其他Menu時，其他Menu會關閉
 
 
 先去看文檔 ，是否有屬性可以做修改
@@ -940,7 +940,7 @@ onOpenChange	SubMenu 展開/關閉的回調	function(openKeys: string [ ])
 ```
 
 --------------------------------------------------------------------------------------------------------------
-## 菜單欄 -組件的抽取
+# 菜單欄 -組件的抽取
 
 因為目前是寫在Menu.tsx下面，未來Menu會越寫越多，所以需要把組件提取出來。
 
@@ -1047,7 +1047,7 @@ import  MainMenu   from "@/components/MainMenu";
 以後要操作Menu就可以在這邊操作
 
 ----------------------------------------------------------------------------------------------
-## 菜單數據整理
+# 菜單數據整理
 
 原本數據看起來不太直觀
 寫一個直接看得動的樣式
@@ -1138,7 +1138,7 @@ const items: MenuItem[] = [
 ```
 
 ---------------------------------------------------------------------------------------------
-## 將剩下的Menu配置一下他們的路徑
+# 將剩下的Menu配置一下他們的路徑
 
 
 將About.tsx 更改名稱為Page301.tsx
@@ -1168,7 +1168,7 @@ const Page301 =lazy(()=>import("../views/Page301"))
 ```
 
 -------------------------------------------------------------------------------------------------
-## 菜單欄 -F5刷新時，默認當前選中的樣式
+# 菜單欄 -F5刷新時，默認當前選中的樣式
 
 去MainMenu 內的index.tsx中
 
@@ -1211,7 +1211,7 @@ import { useNavigate,useLocation} from "react-router-dom"
           />
 ```
 ----------------------------------------------------------------------------------
-## 菜單欄-配置初始展開項的思路分析
+# 菜單欄-配置初始展開項的思路分析
 －＞白話文的意思是：假設選到301 重新整理的時候，301的菜單來需要是打開來的
 
 在 OpenKeys 中 ，一開始載入時顯示為空''，所以會關起來。
@@ -1282,27 +1282,660 @@ import { useNavigate,useLocation} from "react-router-dom"
 
 ---------------------------------------------------------------------------------------------------------
 
-### 登陸頁面
+# 登陸頁面
 ## 登陸頁面基本配置
 
+/src/views/下創建以下目錄：
+```
+|---views
+    |---Login
+        |---index.tsx
+        |---init.ts
+        |---login.module.scss
+```
+
+/src/views/Login/index.tsx
+
+在上面引入
+
+```
+import Login from "../views/Login"
+
+```
+在下面新增路由
+
+
+```
+{
+    path:"/login",
+    element: <Login />
+},
+```
+
+然後來去新增scss資料夾 取名 loginmodule.scss
+
+```
+.loginPage{
+
+}
+```
+
+引入到剛剛的index.ts 頁面中
+
+```
+import styles from "./login.module.scss"
+
+const view =()=>{
+    return (
+        <div className={styles.loginPage}>
+            登錄頁面
+        </div>
+    )
+}
+
+export default view
+```
+
+再來引入這份寫好的背影畫面~ ini.ts
+
+```
+export default function initLoginBg(){
+  var windowWidth = document.documentElement.clientWidth || document.body.clientWidth;
+var windowHeight = document.documentElement.clientHeight || document.body.clientHeight;
+// var windowWidth = window.clientWidth;
+// var windowHeight = window.clientHeight;
+var canvas = document.getElementById('canvas') as HTMLCanvasElement,
+ctx = canvas.getContext('2d') as CanvasRenderingContext2D,
+w = canvas.width = windowWidth,
+h = canvas.height = windowHeight,
+
+hue = 217,
+stars:IntStart[] = [],
+count = 0,
+maxStars = 1500;//星星数量
+
+var canvas2 = document.createElement('canvas') ,
+ctx2 = canvas2.getContext('2d') as CanvasRenderingContext2D;
+canvas2.width = 100;
+canvas2.height = 100;
+var half = canvas2.width / 2,
+gradient2 = ctx2.createRadialGradient(half, half, 0, half, half, half);
+gradient2.addColorStop(0.025, '#CCC');
+gradient2.addColorStop(0.1, 'hsl(' + hue + ', 61%, 33%)');
+gradient2.addColorStop(0.25, 'hsl(' + hue + ', 64%, 6%)');
+gradient2.addColorStop(1, 'transparent');
+
+ctx2.fillStyle = gradient2;
+ctx2.beginPath();
+ctx2.arc(half, half, half, 0, Math.PI * 2);
+ctx2.fill();
+
+// End cache
+
+function random(min:number, max=0) {
+if (arguments.length < 2) {
+  max = min;
+  min = 0;
+}
+
+if (min > max) {
+  var hold = max;
+  max = min;
+  min = hold;
+}
+
+return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function maxOrbit(x:number, y:number) {
+var max = Math.max(x, y),
+  diameter = Math.round(Math.sqrt(max * max + max * max));
+return diameter / 2;
+//星星移动范围，值越大范围越小，
+}
+interface IntStart{
+orbitRadius:number;
+radius:number;
+orbitX:number;
+orbitY:number
+timePassed:number;
+speed:number;
+alpha:number;
+draw:()=>void;
+}
+var Star = function(this: IntStart) {
+
+this.orbitRadius = random(maxOrbit(w, h));
+this.radius = random(60, this.orbitRadius) / 18; 
+//星星大小
+this.orbitX = w / 2;
+this.orbitY = h / 2;
+this.timePassed = random(0, maxStars);
+this.speed = random(this.orbitRadius) / 500000; 
+//星星移动速度
+this.alpha = random(2, 10) / 10;
+
+count++;
+stars[count] = this;
+}
+
+Star.prototype.draw = function() {
+var x = Math.sin(this.timePassed) * this.orbitRadius + this.orbitX,
+  y = Math.cos(this.timePassed) * this.orbitRadius + this.orbitY,
+  twinkle = random(10);
+
+if (twinkle === 1 && this.alpha > 0) {
+  this.alpha -= 0.05;
+} else if (twinkle === 2 && this.alpha < 1) {
+  this.alpha += 0.05;
+}
+
+ctx.globalAlpha = this.alpha;
+ctx.drawImage(canvas2, x - this.radius / 2, y - this.radius / 2, this.radius, this.radius);
+this.timePassed += this.speed;
+}
+
+for (var i = 0; i < maxStars; i++) {
+new Star.prototype.constructor();
+}
+
+function animation() {
+ctx.globalCompositeOperation = 'source-over';
+ctx.globalAlpha = 0.5; //尾巴
+ctx.fillStyle = 'hsla(' + hue + ', 64%, 6%, 2)';
+ctx.fillRect(0, 0, w, h)
+
+ctx.globalCompositeOperation = 'lighter';
+for (var i = 1, l = stars.length; i < l; i++) {
+  stars[i].draw();
+};
+
+window.requestAnimationFrame(animation);
+}
+
+animation();
+}
+```
+
+接下來回去index.tsx頁面
+新增一個 
+
+```
+            {/* 存放背景畫面 */}
+        <canvas id="canvas" style={{display:"block"}}></canvas>
+```
+
+上方引入 ini.ts 的這個檔案
+
+```
+import initLoginBg from "./ini.ts"
+```
+
+這時候會發現 "./ini.ts" 下方有~~~~~波浪報錯
+
+要去全局做聲明的檔案 vite-env.d.ts 下面增加一行
+
+```
+declare module "*.ts"
+```
+
+這時候就沒有紅色波浪了~~~~~~~
+
+
+→未來想引入 png、jpg 檔案都可以來這裡引入
+
+
+接下來加載完組件需要做初始化
+
+
+在上方引入useEffect 
+
+```
+import { useEffect } from "react"
+```
+
+下方新增初始化狀態
+
+```
+    //加載完這個組件之後，需要初始化
+    useEffect(()=>{
+        initLoginBg();
+        window.onresize = function(){initLoginBg()}; //假設畫面變動時，在自適應畫面
+    },[])
+```
 
 
 
+接下來新增登錄盒子
+```
+  return (
+        <div className={styles.loginPage}>
+            {/* 存放背景畫面 */}
+        <canvas id="canvas" style={{display:"block"}}></canvas>
+            {/* 登錄的盒子 */}
+            <div className={styles.loginBox+ " loginbox"}>
+              {/* 標題部分 */}
+                    <div className={styles.title}>
+                    <h1>練習用&nbsp;·&nbsp;通用後台系統</h1>
+                    <p>Strive Everyday</p>
+                    </div>
+            </div>
+        
+        </div>
+    )
+```
+
+然後新增scss畫面樣式
+```
+.loginPage{
+    position: relative;
+    .loginBox{
+        width: 450px;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%,-50%);
+        color:#fff;
+  
+        h1{
+            font-weight: bold;
+            font-size: 22px;
+            text-align: center;
+            color:#fff;
+        }
+        p{
+            text-align: center;
+            margin: 20px 0;
+        }
+        .title{
+            margin-bottom: 40px;
+            position: relative;
+            &:before,&:after{
+                content:"";
+                width: 100px;
+                height: 2px;
+                position: absolute;
+                background: linear-gradient(to right,rgba(255,255,255,0),#1976D2);
+                left: -20px;
+                top:18px;
+            }
+            &:after{
+                left: auto;
+                background: linear-gradient(to left,rgba(255,255,255,0),#1976D2);
+                right: -20px;
+            }
+        }
+    }
+  }
+```
+------------------------------------------------------------------------------------------
+#登錄頁面-登錄表單組件的構建
+
+##首頁表單的繪製
+
+找到Antd中，表單組件頁面  https://4x.ant.design/components/input-cn/
+雖然有表單Form組件
+但自由度不高
+
+所以使用input組件
 
 
 
+去/src/views/Login/index.tsx中：
+上方引入input
+```
+import { Input } from 'antd';
+```
+在表單部分引入剛剛複製的input
+
+```
+     {/* 表單部分 */}
+     <div className="form">
+      <Input placeholder="Basic usage" />;
+     </div>
+```
+
+燈愣  出現錯誤
+
+找了一陣子
+發現是less文件當中，官方vite本身錯誤 ，找less解析不了
+
+回去 vite.config.ts檔案
+
+把他Mark掉 代碼如下：
+
+```
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+// import styleImport,{AntdResolve} from 'vite-plugin-style-import';
+import * as path from "path"
 
 
+// https://vitejs.dev/config/
+export default defineConfig({
+  plugins: [
+    react(),
+    // styleImport({
+    //   resolves:[
+    //     AntdResolve()
+    //   ],
+    // }),
+  ],
+  resolve:{
+    alias:{
+      "@":path.resolve(__dirname,'./src')
+    }
+  }
+})
+
+```
+
+然後回到  Login/index.tsx
+
+將他官方文檔的全局樣式 引入
+
+```
+import 'antd/dist/antd.css';
+```
+
+input 框就有樣式了!!!!!
+
+然後新增密碼框
+
+```
+    {/* 表單部分 */}
+    <div className="form">
+    <Input placeholder="帳號" />
+    <Input.Password placeholder="密碼" />
+    </div>
+```
+
+但是這樣兩個間距 太近了!!
+
+回去antd這UI組件庫
+都有間距的功能回去找一下~
+
+發現有一個space 垂直間距 的寫法
+是使用<space></space>將東西包起來
 
 
+在上方先 引入 <space>
+```
+import { Input,Space } from 'antd';
+```
 
 
+下方將剛剛帳號密碼包起來
+
+```
+{/* 表單部分 */}
+<div className="form">
+<Space direction="vertical" size="middle" style={{ display: 'flex' }}>
+<Input placeholder="帳號" />
+<Input.Password placeholder="密碼" />
+</Space>
+</div>
+```
+
+接下來新增登錄按鈕
+一樣上方引入Button
+
+```
+import { Input,Space,Button } from 'antd';
+```
+
+下方表單部分新增登錄按鈕
+```
+{/* 表單部分 */}
+                    <div className="form">
+                    <Space direction="vertical" size="large" style={{ display: 'flex' }}>
+                        <Input placeholder="帳號" />
+                        <Input.Password placeholder="密碼" />
+                        <Button type="primary" block>登錄</Button>
+                    </Space>
+
+```
 
 
+但不想要原本的白色底的樣式，如果是透明的樣式會更好看
+需要改變UI組件的樣式
+
+再引入Style.loginBox後面增加一個 我們自己定義的樣式.loginBox
+
+```
+            {/* 登錄的盒子 */}
+            <div className={styles.loginBox+ " loginbox"}>
+```
+
+然後創建一個檔案  loging.less
+
+在index.tsx 中引入這個檔案
+
+```
+import './login.less'
+```
 
 
+然後去login.less中修改樣式
+變成透明且 藍色邊框
+
+```
+.loginbox{
+    .ant-input, .ant-input-password{
+        background-color: rgba(255,255,255,0);
+        border-color: #1890ff;
+        color:#FFFFFF;
+    }
+    .ant-input-password-icon,.ant-input-password-icon:hover{
+        color:#1890ff;
+    }
+}
+```
 
 
+-----------------------------------------------------------------------------------------------
+
+#登錄頁面-驗證碼模塊布局
 
 
+需要放一個DIV  裡面放一個input +驗證碼圖片
 
+
+在密碼下面， 登錄上面 新增DIV 模塊
+
+通常驗證碼叫做captchaBox
+
+
+```
+<Space direction="vertical" size="large" style={{ display: 'flex' }}>
+                        <Input placeholder="帳號" />
+                        <Input.Password placeholder="密碼" />
+                        <div className="captchaBox">
+                            <Input placeholder="驗證碼" />
+                            <div className="captchaImg">
+                                <img height="38" src="http://www.zendei.com/js/img.php?url=https://img2018.cnblogs.com/blog/1735560/201911/1735560-20191109220533186-1855679599.jpg" alt="" />
+                            </div>
+                        </div>
+                        <Button type="primary" className="loginBtn" block>登錄</Button>
+                    </Space>
+```
+
+新增模塊完成
+然後要修改樣式 
+去剛剛的login.tsx修改
+
+```
+.loginbox{
+    //控制表單元素樣式
+    .ant-input, .ant-input-password{
+        background-color: rgba(255,255,255,0);
+        border-color: #1890ff;
+        color:#FFFFFF;
+        height: 38px;
+    }
+    .ant-input-password .ant-input{
+        height: 28px;
+    }
+    //對眼睛圖標控制
+    .ant-input-password-icon,.ant-input-password-icon:hover{
+        color:#1890ff;
+    }
+    //控制驗證碼盒子
+    .captchaBox{
+        display: flex;
+        .captchaImg{
+            margin-left: 20px;
+            cursor:pointer; //移到上面變成手指頭
+        } 
+    }
+
+    //控制登錄按鈕
+    .loginBtn{
+        height: 38px;
+    }
+}
+```
+
+
+完成~
+
+
+------------------------------------------------------------------------------------------------------
+#登錄頁面-placeholder字體顏色的控制
+
+
+目前字體內是白色 ，看起來有點不一至
+想把顏色改為藍色
+
+在login.less內新增字體顏色
+
+```
+  .ant-input::-webkit-input-placeholder{
+        // color: #1890ff;
+        color: #1890ff;   //顏色
+        opacity: .5;	//透明度
+    }
+```
+
+----------------------------------------------------------------------------------------------------
+
+#登錄頁面-獲取用戶輸入的用戶名
+
+在用戶名稱那邊 新增一個onChange事件
+
+```
+  <Input placeholder="帳號"  onChange={usernameChage}/>
+```
+
+
+然後再上方輸入一個函數
+
+```
+    //獲取用戶輸入訊息
+    const usernameChage=(e:ChangeEvent<HTMLInputElement)=>{
+        console.log(e.target.value)
+    }
+```
+來測試 是否有得到輸入內容
+
+然後在上方引入useState
+
+```
+import { ChangeEvent, useEffect,useState  } from "react"
+```
+
+定義 一個空數組，
+設置變量名稱，給用戶輸入
+如果用戶輸入訊息onchange就傳給空數組
+
+```
+    //獲取用戶輸入訊息
+    const[usernameVal,setusernameVal] =useState("") //定義用戶輸入訊息
+    const usernameChage=(e:ChangeEvent<HTMLInputElement>)=>{
+        //獲取用戶輸入的用戶名
+        console.log(e.target.value);
+        setusernameVal(e.target.value)
+    }
+```
+
+
+密碼 與 驗證碼 同理~
+
+一樣新增
+
+以下為代碼：
+```
+const[usernameVal,setusernameVal] =useState("") //定義帳號輸入訊息
+    const[passwordVal,setpasswordVal] =useState("") //定義密碼輸入訊息
+    const[captchaVal,setcaptchaVal] =useState("") //定義驗證碼輸入訊息
+    const usernameChage=(e:ChangeEvent<HTMLInputElement>)=>{
+        //獲取用戶輸入的用戶名
+        // console.log(e.target.value);
+        //修改usernameVal這個變量為用戶輸入值，以後拿到usernameVal這個變量就相當於得到用戶訊息
+        setusernameVal(e.target.value)
+    }
+    const passwordChage=(e:ChangeEvent<HTMLInputElement>)=>{
+        setpasswordVal(e.target.value)
+    }
+    const captchaChage=(e:ChangeEvent<HTMLInputElement>)=>{
+        setcaptchaVal(e.target.value)
+    }
+
+    //點擊登錄按鈕
+    const gotoLogin=()=>{
+
+    }
+
+    return (
+        <div className={styles.loginPage}>
+            {/* 存放背景畫面 */}
+        <canvas id="canvas" style={{display:"block"}}></canvas>
+            {/* 登錄的盒子 */}
+            <div className={styles.loginBox+ " loginbox"}>
+                    {/* 標題部分 */}
+                    <div className={styles.title}>
+                    <h1>練習用&nbsp;·&nbsp;通用後台系統</h1>
+                    <p>Strive Everyday</p>
+                    </div>
+                    {/* 表單部分 */}
+                    <div className="form">
+                    <Space direction="vertical" size="large" style={{ display: 'flex' }}>
+                        <Input placeholder="帳號"  onChange={usernameChage}/>
+                        <Input.Password placeholder="密碼" onChange={passwordChage} />
+                        <div className="captchaBox">
+                            <Input placeholder="驗證碼" onChange={captchaChage} />
+                            <div className="captchaImg">
+                                <img height="38" src="http://www.zendei.com/js/img.php?url=https://img2018.cnblogs.com/blog/1735560/201911/1735560-20191109220533186-1855679599.jpg" alt="" />
+                            </div>
+                        </div>
+                        <Button type="primary" className="loginBtn" block>登錄</Button>
+                    </Space>
+
+                    </div>
+
+            </div>
+        </div>
+    )
+```
+
+然後新增一個onClick事件在登錄按鈕上
+
+```
+<Button type="primary" className="loginBtn" block onClick={gotoLogin}>登錄</Button>
+
+```
+
+測試是否可以把值傳出去
+```
+    //點擊登錄按鈕
+    const gotoLogin=()=>{
+        console.log("用戶輸入的用戶名，密碼，驗證碼分別是：",usernameVal,passwordVal,captchaVal)
+    }
+
+```
+
+
+測試完成可以收到用戶輸入的訊息
+
+
+-----------------------------------------------------------------------------------------------
