@@ -1939,3 +1939,430 @@ const[usernameVal,setusernameVal] =useState("") //定義帳號輸入訊息
 
 
 -----------------------------------------------------------------------------------------------
+
+# redux-dev-tools 工具安裝
+
+去GOOGLE CHROME應用商店 新增三個應用程式
+
+## 1. redux-devtools
+## 2. Vue.js devtools
+## 3. React Context DevTool
+
+在CHROME 內 右上角三個點 →更多工具→擴充功能 內可以檢視 是否安裝完成
+
+
+-----------------------------------------------------------------------------------------------
+# ReactRedux的基本配置
+
+## 安裝Redux 和 ReactRedux
+
+```
+npm i redux react-redux --save
+```
+
+/src下新增store，新建index.ts 文件 及 reducer.ts 文件
+
+```
+import {legacy_createStore} from "redux"
+import reducer from "./reducer.ts"
+
+const store = legacy_createStore(reducer);
+
+export default store
+```
+
+## 開始寫數據到數據倉庫
+
+去reducer.ts文件內寫數據
+
+```
+const defaultState={
+    num: 20
+ 
+}
+
+let reducer = (state =defaultState,)=>{
+    let newState = JSON.parse(JSON.stringify(state))
+
+    return newState
+}
+
+export default reducer
+```
+
+接下來就可以去使用這些組件，來新增資料
+
+要新增資料之前  ，先去main.tsx 檔案內  引入狀態管理的資料 引入provider
+
+```
+import {Provider} from "react-redux"
+
+```
+
+然後Provider 需要放在最外層
+
+```
+ <Provider >
+
+   <BrowserRouter>
+      <App />
+   </BrowserRouter>
+    
+
+  </Provider>
+```
+
+這時候會會出現一個紅色波浪的錯誤，是因為缺少了一個必傳的屬性 store
+
+store 就是我們剛剛創立的倉庫
+
+所以這時候記得要引入我們剛剛的資料倉庫
+
+```
+//狀態管理
+import {Provider} from "react-redux"
+import store from '@/store'
+```
+
+
+下方代碼如下：
+```
+ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+  <Provider store={store} >
+   <BrowserRouter>
+      <App />
+   </BrowserRouter>
+  </Provider>
+ 
+)
+
+```
+
+##接下來 在組件中獲取倉庫數據
+
+
+在Page1.tsx 檔案中
+使用HOOK 函數中的useSelector 來獲取 倉庫的數據
+
+
+```
+import {useSelector} from "react-redux";
+
+const View =()=>{
+//獲取倉庫的數據
+const {num} =useSelector((state)=>({
+    num:state.num
+}))
+
+    return(
+        <div className="home">
+            <p>這是Page1頁面內容</p>
+            <p>{num}</p>
+        </div>
+    )
+}
+
+export default View
+```
+這時候 到/page1就能看到畫面出來剛剛的num 20的數字
+但是點選F12 內的Redux 倉庫中沒有東西出來
+
+這時候需要到store內 新增下面這個配置項目
+為了瀏覽器正常使用 redux-dev-tools插件
+
+```
+
+//創建數據倉庫
+const store = legacy_createStore(reducer,window.__REDUX_DEVTOOLS_EXTENSION__ &&window.__REDUX_DEVTOOLS_EXTENSION__());
+
+export default store
+
+```
+這時候返回F12 的Redux就可以看到state裡面有num:20的資料
+
+
+------------------------------------------------------------------------------------------
+## 接下來 新增按鈕 來讓剛剛的num ++
+
+在剛剛Page1.tsx中新增按鈕 然後增加onclick事件
+
+```
+  return(
+        <div className="home">
+            <p>這是Page1頁面內容</p>
+            <p>{num}</p>
+            <button onClick={changeNum}>按鈕</button>
+        </div>
+    )
+```
+
+然後在外面新增 函數 事件
+先在上方引入 useDispatch才可以改變數據
+```
+import {useSelector,useDispatch} from "react-redux";
+```
+再來新增函數
+```
+//修改倉庫數據
+const dispatch= useDispatch()
+const changeNum =()=>{
+    // dispatch({type:"字符串(認為是一個記號)",val:3})   type 是固定的 ，Val是自定義的
+    dispatch({type:"add"})
+}
+```
+
+當使用dispatch 會來觸發Reducer.ts 裡面的內容
+
+在reducer 新增console.log("執行了reducer") 來確認一下 是否有執行
+
+```
+let reducer = (state =defaultState,)=>{
+    console.log("執行了reducer")
+
+    let newState = JSON.parse(JSON.stringify(state))
+
+
+    return newState
+}
+```
+
+返回網頁 看F12 有結果出來~~
+證明代碼沒問題!!!!!!!!
+灑花!!!!!!~~~~!@#$%*()(*&^%$#@!
+
+
+確認沒問題後，在reducer後面新增 action 事件來讓他num 的深拷貝資料++
+
+```
+//用來管理數據的文件
+
+const defaultState={
+    // 準備數據資料數量
+    num: 20
+}
+
+let reducer = (state =defaultState,action:{type:string,val:number})=>{
+    //調用dispatch執行這裡的代碼
+    // console.log("執行了reducer")
+    //深拷貝
+    let newState = JSON.parse(JSON.stringify(state))
+
+    switch(action.type){
+        case "add1":
+            newState.num++
+            break;
+        case "add2":
+            newState.num+=action.val
+            break;
+        default:
+            break;
+    }
+
+    return newState
+}
+
+export default reducer
+```
+
+結論：
+```
+→	通過useSelector來獲取倉庫的數據
+→	通過useDispath修改倉庫數據
+```
+
+
+接下來要修改檔案中紅色波浪的問題
+```
+//通過useSelector來獲取倉庫的數據
+const {num} =useSelector((state)=>({
+    num:state.num
+}))
+```
+num下方的波浪是說 沒有存在num 是ts的報錯
+
+新建一個types 資料夾 裡面新增store.d.ts
+
+內容新增
+```
+// 【重點】類型聲明裡面不要直接使用引入import...from...
+// 而是使用 import("@/store") 這種語法
+// import store from "@/store"
+// TS中提供了ReturnType，用来获取函数类型的返回值
+type RootState = ReturnType<typeof import("@/store").getState>
+```
+返回Page1.tsx內將RootState加到 state中
+```
+//通過useSelector來獲取倉庫的數據
+const {num} =useSelector((state:RootState)=>({
+    num:state.num
+}))
+```
+這樣 num的紅色~~~~就消失囉^___________________^
+
+
+發現Store 內的index.ts
+也發現紅色~~~~~錯誤
+
+在說明沒有那個東西
+
+在剛剛 
+Store.d.ts
+新增一個全局聲明
+```
+interface Window{
+    __REDUX_DEVTOOLS_EXTENSION__:function 
+}
+```
+
+這樣就解決兩個波浪問題了
+
+-------------------------------------------------------------------------------------------------
+# react-redux 數據和方法 從reducer中進行抽離
+
+未來可能很多的方法及數據 都會放在reducer.ts 檔案內
+代碼就會變得很長、很亂
+所以需要把 方法從模塊中抽取出來
+
+新建一個資料夾在 /store下面 叫做 NumStatus
+裡面新增一個 index.ts檔案
+
+```
+export default {
+    state:{
+        // 準備數據資料數量
+        num: 20
+    },
+    actions:{
+        add1(newState:{num:number},action:{type:string}){
+            newState.num++
+        },
+        add2(newState:{num:number},action:{type:string,val:number}){
+            newState.num+= action.val
+        },
+    }
+}
+```
+
+再來將 reducer.ts 中修改成模塊 
+
+代碼如下：
+```
+import handleNum from "./NumStatus"
+
+//用來管理數據的文件
+const defaultState={
+    // num:NumStatus.state.num //這種數據一多 ，要寫很多次
+    ...handleNum.state //解構的寫法
+}
+
+let reducer = (state =defaultState,action:{type:string,val:number})=>{
+    //調用dispatch執行這裡的代碼
+    // console.log("執行了reducer")
+    //深拷貝
+    let newState = JSON.parse(JSON.stringify(state))
+
+    switch(action.type){
+        case "add1":
+            handleNum.actions.add1(newState,action)
+            break;
+        case "add2":
+            handleNum.actions.add2(newState,action)
+            break;
+        default:
+            break;
+    }
+
+    return newState
+}
+
+export default reducer
+```
+
+未來就可以去Number 下新增、修改 index.ts資料就可以了~
+
+
+--------------------------------------------------------------------------------------------
+
+# React-redux方法統一管理
+
+
+把NumStatus內的代碼在下面新增 名字統一管理
+
+```
+ //名字統一管理
+    add1:"add1",
+    add2:"add2",
+```
+在把Reducer.ts 修改成
+```
+switch(action.type){
+        case handleNum.add1:
+            handleNum.actions[handleNum.add1](newState,action)
+            break;
+        case handleNum.add2:
+            handleNum.actions[handleNum.add2](newState,action)
+            break;
+        default:
+            break;
+    }
+```
+
+這樣就可以 修改NumStatus資料即可。
+
+
+
+在新增一個ArrStatus資料夾 下方新增 index.ts
+內容修改成
+array.push樣式
+如下：
+```
+export default {
+    state:{
+        // 準備數據資料數量
+        sarr:[10,20,30] 
+    },
+    actions:{
+        sarrpush(newState:{sarr:number[]},action:{type:string,val:number}){
+            newState.sarr.push(action.val)
+        },
+        
+    },
+    //名字統一管理
+    sarrpush:"sarrpush",
+  
+}
+
+```
+
+寫好然後回到 reducer 進行引入
+
+```
+import handleArr from "./index"
+
+
+
+//用來管理數據的文件
+let reducer = (state ={...handleArr.state},action:{type:string,val:number})=>{
+    //調用dispatch執行這裡的代碼
+    // console.log("執行了reducer")
+    //深拷貝
+    let newState = JSON.parse(JSON.stringify(state))
+
+    switch(action.type){
+        case handleArr.sarrpush:
+            handleArr.actions[handleArr.sarrpush](newState,action)
+            break;
+        default:
+            break;
+    }
+
+    return newState
+}
+
+export default reducer
+
+```
+
+------------------------------------------------------------------------------------------------------
+
+
