@@ -5,6 +5,7 @@ import initLoginBg from "./init.ts"
 import 'antd/dist/antd.css';
 import './login.less'
  
+import { CaptchaAPI } from "@/request/api";
 const view =()=>{
 
 
@@ -31,9 +32,17 @@ const view =()=>{
         setcaptchaVal(e.target.value)
     }
 
-    //點擊登錄按鈕
+    //點擊登錄按鈕事件函數
     const gotoLogin=()=>{
         console.log("用戶輸入的用戶名，密碼，驗證碼分別是：",usernameVal,passwordVal,captchaVal)
+    }
+
+    //點及驗證碼圖片盒子的事件函數
+    const getCaptchaImg=()=>{
+           //做驗證碼的請求
+             CaptchaAPI().then((res)=>{
+             console.log(res);
+    })
     }
 
     return (
@@ -54,8 +63,8 @@ const view =()=>{
                         <Input.Password placeholder="密碼" onChange={passwordChage} />
                         <div className="captchaBox">
                             <Input placeholder="驗證碼" onChange={captchaChage} />
-                            <div className="captchaImg">
-                                <img height="38" src="http://www.zendei.com/js/img.php?url=https://img2018.cnblogs.com/blog/1735560/201911/1735560-20191109220533186-1855679599.jpg" alt="" />
+                            <div className="captchaImg" onClick={getCaptchaImg}>
+                                <img height="38" src="" alt="" />
                             </div>
                         </div>
                         <Button type="primary" className="loginBtn" block onClick={gotoLogin}>登錄</Button>
