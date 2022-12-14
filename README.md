@@ -2364,5 +2364,405 @@ export default reducer
 ```
 
 ------------------------------------------------------------------------------------------------------
+# 優化Switch ...case... 代碼
+
+switch 的作法是拿的 action.type和case後面的每一個進行對比，這種做法很像遍歷。
+
+所以來進行優化
+
+去NumStatus下的 index.ts 文件中
+把add:"add1"
+修改成Obj格式
+
+```
+   //名字統一管理
+    // add1:"add1",
+    // add2:"add2",
+    actionNames:{
+        add1:"add1",
+        add2:"add2",
+    }
+```
+
+再去reducer.ts把switch.case修改如下：
+
+```
+import handleNum from "./index"
+
+
+
+//用來管理數據的文件
+let reducer = (state ={...handleNum.state},action:{type:string,val:number})=>{
+    //調用dispatch執行這裡的代碼
+    // console.log("執行了reducer")
+    //深拷貝
+    let newState = JSON.parse(JSON.stringify(state))
+
+    //思路： switch 的作法是拿的 action.type和case後面的每一個進行對比，這種做法很像遍歷。
+    //那我們就把case後面的這些值 做成對象Obj，actionNames
+    // switch(action.type){
+    //     case handleNum.add1:
+    //         handleNum.actions[handleNum.add1](newState,action)
+    //         break;
+    //     case handleNum.add2:
+    //         handleNum.actions[handleNum.add2](newState,action)
+    //         break;
+    //     default:
+    //         break;
+    // }
+    //優化：上面這樣寫，我們每天加一個方法，都要在這裡多寫一句case
+
+    //拿著action.type和actionName進行每一項的對比，如果是相等，就調用 模塊名.action[下標](newState,action)
+
+    for(let key in handleNum.actionNames){
+        //key是每一個健
+        //判斷是不是相等
+        if(action.type===handleNum.actionNames[key]){
+            handleNum.actions[handleNum.actionNames[key]](newState,action);
+            break;
+        }
+    }
+    //這樣寫就達到，每次寫一個方法都不需要再手動添加這裡的case
+    //可以解放雙手~~~~
+
+
+    return newState
+}
+
+export default reducer
+```
+
+這樣就完成reducer.ts 的優化拉~
+
+# 接下來 來優化index.ts的檔案
+
+把剛剛測試的 修改成如下代碼：
+
+```
+    //名字統一管理
+    // add1:"add1",
+    // add2:"add2",
+    // actionNames:{
+    //     add1:"add1",
+    //     add2:"add2",
+    // }
+    actionNames:{}
+```
+
+再來下面新增一個全局函數然後賦值給剛剛的obj，代碼如下：
+```
+//我們現在想做到的是：
+//actionNames自動生成，不用我每一次添加一個方法，都要在actionNames手動添加值，這樣很麻煩
+
+//定義一個全局的actionNames
+let actionNames={}
+//actionNames 有多少對key,取決於action裡有多少個函數，所以遍歷store.actions,給actionName添加key
+
+for (let key in store.actions){
+    actionNames[key]=key;
+}
+//把裡面的OBJ賦值
+store.actionNames=actionNames;
+```
+-----------------------------------------------------------------------
+# 接下來優化 ArrStatus
+
+把剛剛優化完的代碼 複製 貼過來整理一下就可以了
+/ArrStatusi/index.ts 代碼如下：
+
+```
+const store= {
+    state:{
+        sarr:[10,20,30] 
+    },
+    actions:{
+        sarrpush(newState:{sarr:number[]},action:{type:string,val:number}){
+            newState.sarr.push(action.val)
+        },
+    },
+    sarrpush:"sarrpush",
+    actionNames:{},
+}
+let actionNames={}
+for (let key in store.actions){
+    actionNames[key]=key;
+}
+store.actionNames=actionNames;
+
+export default store
+```
+/ArrStatusi/reducer.ts 代碼如下：
+
+```
+import handle from "./index"
+let reducer = (state ={...handle.state},action:{type:string,val:number})=>{
+    let newState = JSON.parse(JSON.stringify(state))
+    for(let key in handle.actionNames){
+        if(action.type===handle.actionNames[key]){
+            handle.actions[handle.actionNames[key]](newState,action);
+            break;
+        }
+    }
+    return newState
+}
+export default reducer
+```
+
+
+之後未來新增 XXX Status檔案
+只需要修改 index.ts 的
+state 及 action 裡面都資料即可
+其他都自動生成
+
+
+
+
+-----------------------------------------------------------------------------------------------
+# redux-thunk  setTimeOut異步的解決方案
+
+redux-thunk相比於redux-saga，體積小，靈活，但需要自己手動抽取及封裝，但學習成本低。
+
+需在項目 目錄下安裝redux-thunk
+
+```
+npm i redux-thunk
+```
+
+然後去 /store/index.ts文件內引入一下 ：
+
+```
+import {legacy_createStore,combineReducers,compose,applyMiddleware} from "redux"
+import reduxThunk from "redux-thunk"
+import  handleNum  from "./NumStatus/reducer";
+import  handleArr  from "./ArrStatus/reducer";
+import  handleXxxxx  from "./XxxxxStatus/reducer";
+
+//組合各個模塊的reducer
+const reducers = combineReducers({
+    handleNum,
+    handleArr,
+    handleXxxxx,
+})
+
+
+//創建數據倉庫
+//新增window.__REDUX_DEVTOOLS_EXTENSION__ &&window.__REDUX_DEVTOOLS_EXTENSION__()
+//是為了瀏覽器正常使用 redux-dev-tools插件
+// const store = legacy_createStore(reducers,window.__REDUX_DEVTOOLS_EXTENSION__ &&window.__REDUX_DEVTOOLS_EXTENSION__());
+
+
+// 判斷有沒有__REDUX_DEVTOOLS_EXTENSION_COMPOSE__這個模塊
+let composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({}):compose //rt
+
+// 把倉庫數據，瀏覽器redux-dev-tools，還有reduxThunk插件關聯在store中
+const store = legacy_createStore(reducers,composeEnhancers(applyMiddleware(reduxThunk))); 
+export default store
+```
+
+還要需 /type/stroe.d.ts 聲明  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__  這個文件
+```
+interface Window{
+    __REDUX_DEVTOOLS_EXTENSION__:function ;
+    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__:function;
+}
+```
+
+
+
+    const changeNum2 =()=>{
+        // 最開始的寫法－同步的寫法
+        // dispatch({type:"add1"})
+        // 異步的寫法－ redux-thunk的用法  基本格式： dispath(執行異步的函數)
+        dispatch((dis:Function)=>{
+            setTimeout(()=>{
+                dis({type:"add1"})
+            },1000)
+        })
+        
+    }
+```
+把代碼放上去
+
+
+# React-redux總結與使用
+
+去Xxxxx.ts中 的index.ts
+
+已經封裝好了，未來新增只需要在規定的 模塊下方新增 數據、 同步方法、異步方法 即可
+
+```
+const store= {
+    state:{
+       //放數據
+    },
+    actions:{
+       //放同步方法
+    },
+    asyncActions:{
+       //放異步方法
+    },
+    sarrpush:"sarrpush",
+    actionNames:{},
+}
+let actionNames={}
+for (let key in store.actions){
+    actionNames[key]=key;
+}
+store.actionNames=actionNames;
+
+export default store
+
+```
+
+獲取數據的方法
+
+可以參考page1頁面下
+```
+import {useSelector,useDispatch} from "react-redux";
+import numStatus from "@/store/NumStatus"
+
+const View =()=>{
+//通過useDispath修改倉庫數據
+const dispatch= useDispatch()
+//通過useSelector來獲取倉庫的數據
+const {num,sarr} =useSelector((state:RootState)=>({
+    num:state.handleNum.num,
+    sarr:state.handleArr.sarr
+}))
+
+    const changeNum =()=>{
+        // dispatch({type:"字符串(認為是一個記號)",val:3})   type 是固定的 ，Val是自定義的
+        dispatch({type:"add3",val:100})
+    }
+    const changeNum2 =()=>{
+        // 最開始的寫法－同步的寫法
+        // dispatch({type:"add1"})
+        // 異步的寫法－ redux-thunk的用法  基本格式： dispath(執行異步的函數)
+        // dispatch((dis:Function)=>{
+        //     setTimeout(()=>{
+        //         dis({type:"add1"})
+        //     },1000)
+        // })
+
+        //優化Redux-thunk的異步寫法
+        // dispatch(調用狀態管理中的asyncAdd1)
+        dispatch(numStatus.asyncActions.asyncAdd1)
+    }
+
+    // //對sarr的操作
+    // const {sarr} =useSelector((state:RootState)=>({
+    //     sarr:state.handleArr.sarr
+    // }))
+    const changeArr=()=>{
+        // dispatch({type:"字符串(認為是一個記號)",val:3})   type 是固定的 ，Val是自定義的
+        dispatch({type:"sarrpush",val:100})
+    }
+    
+    return(
+        <div className="home">
+            <p>這是Page1頁面內容</p>
+            <p>{num}</p>
+            <button onClick={changeNum}>同步按鈕</button>
+            <button onClick={changeNum2}>異步按鈕</button>
+
+            <p>{sarr}</p>
+            <button onClick={changeArr}>按鈕</button>
+        </div>
+    )
+}
+
+export default View
+```
+
+----------------------------------------------------------------------------------------------------
+# axios封裝 和apis的抽取
+
+安裝axios
+```
+npm i axios
+```
+
+按照一般安裝方式
+新建一個文件夾來存放請求
+
+在SRC下方新增一個 資料夾 request
+新增兩個資料檔案 index.ts 和 api.ts
+
+index.ts新增代碼如下：
+
+```
+import  axios  from  "axios"
+
+// 創建axios實例
+const  instance  =  axios . create ({
+    // 基本請求路徑的抽取
+    baseURL : " http://xue.cnkdl.cn:23683 " ,
+    // 這個時間是你每次請求的過期時間，這次請求認為20秒之後這個請求就是失敗的
+    timeout : 20000
+})
+
+// 請求攔截器
+instance . interceptors . request . use ( config => {
+    
+    return  config
+}, err => {
+    return  Promise . reject ( err )
+});
+
+// 響應攔截器
+instance . interceptors . response . use ( res => {
+
+    return  res . data
+}, err => {
+    return  Promise . reject ( err )
+})
+
+export  default  instance
+```
+
+
+api.ts 代碼如下：
+```
+
+import  request  from  "./index"
+
+// 請求中： 請求參數和返回值的類型都需要進行約束
+
+// 驗證碼請求
+export  const  CaptchaAPI  =  (): Promise < CaptchaAPIRes >  => request . get ( " /prod-api/captchaImage " );
+
+// 登錄請求
+export  const  LoginAPI  =  ( params : LoginAPIReq ): Promise < LoginAPIRes >  => request . post ( " /prod-api/login " , params );
+
+```
+
+
+回到login/index.ts檔案
+上方引入API請求
+
+```
+import { CaptchaAPI } from "@/request/api";
+```
+下方return新增 onclick事件
+
+```
+    <div className="captchaImg" onClick={getCaptchaImg}>
+```
+
+然後新增事件函數
+```
+    //點及驗證碼圖片盒子的事件函數
+    const getCaptchaImg=()=>{
+        //做驗證碼的請求
+        CaptchaAPI().then((res)=>{
+            console.log(res)
+        })
+    }
+```
+
+
+
+
+
 
 
