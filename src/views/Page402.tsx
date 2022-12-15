@@ -1,7 +1,7 @@
 const View =()=>{
     return(
         <div className="home">
-            <p>這是Page301頁面</p>
+            <p>這是Page402頁面</p>
         </div>
     )
 }
