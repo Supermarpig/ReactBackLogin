@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    .done {
+        text-decoration: line-through;
+    }
+</style>
+
+<body>
+    <div id="app"></div>
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script type="text/babel">
+        function ToDoList() {
+            const [title, setTitle] = React.useState(`ToDoList - React`)
+            const [input, setInput] = React.useState('');
+            const [list, setList] = React.useState([
+                {
+                    id: 1,
+                    text: '123',
+                    done: false
+                }, {
+                    id: 2,
+                    text: '456',
+                    done: true
+                }
+            ]);
+
+            const completeHandler = (id) => {
+
+                const newList = list.map((todo) => {
+                    if (todo.id === id) todo.done = !todo.done
+                    return todo
+                })
+                setList(newList)
+            }
+
+            const deleteHandler = (id) => {
+                const newList = list.filter((todo) => {
+                    return todo.id !== id
+                })
+                setList(newList)
+            }
+
+            const addHandler = () => {
+                setInput('')
+                setList([...list,
+                {
+                    id: Date.now(),
+                    text: input,
+                    done: false
+                }
+                ])
+            }
+
+            const inputHandler = (e) => {
+                setInput(e.target.value)
+            }
+
+            React.useEffect(() => {
+                console.log('first')
+                return () => {
+                    console.log('cleanup')
+                }
+            }, [])
+            React.useEffect(() => {
+                console.log('all')
+            })
+            React.useEffect(() => {
+                console.log('list')
+            }, [list])
+
+
+
+            return (<div >
+                <h1 >{title}</h1>
+                <p><input type="text" value={input} onChange={inputHandler} /><button onClick={addHandler}>Add</button></p>
+                <ul>{list.map((item) => {
+                    return <li key={item.id} className={item.done ? 'done' : ''}>
+                        <input type="checkbox" checked={item.done} onChange={() => completeHandler(item.id)} />
+                        {item.text}<button onClick={() => deleteHandler(item.id)}>Delete</button>
+                    </li>
+                })}
+                </ul>
+            </div>);
+        }
+        // class ToDoList extends React.Component {
+        //     constructor(props) {
+        //         super(props)
+        //         this.state = {
+        //             title: `ToDoList - React`,
+        //             input:'',
+        //             list: [
+        //                 {
+        //                     id: 1,
+        //                     text: '123',
+        //                     done: false
+        //                 }, {
+        //                     id: 2,
+        //                     text: '456',
+        //                     done: true
+        //                 }
+        //             ]
+        //         }
+        //         this.completeHandler = this.completeHandler.bind(this);
+        //         this.deleteHandler = this.deleteHandler.bind(this);
+        //         this.addHandler = this.addHandler.bind(this);
+        //         this.inputHandler = this.inputHandler.bind(this);
+        //     }
+        //     completeHandler(id) {
+
+        //         const newList = this.state.list.map((todo) => {
+        //             if (todo.id === id) todo.done = !todo.done
+        //             return todo
+        //         })
+        //         this.setState({ list: newList })
+        //     }
+
+        //     deleteHandler(id) {
+        //         const newList = this.state.list.filter((todo) => {
+        //             return todo.id !== id
+        //         })
+        //         this.setState({ list: newList })
+        //     }
+
+        //     addHandler(){
+        //         this.setState({input:'',list:this.state.list.concat([
+        //             {
+        //                 id:Date.now(),
+        //                 text:this.state.input,
+        //                 done:false
+        //             }
+        //         ])})
+        //         this.setState()
+        //     }
+        //     inputHandler(e){
+        //         this.setState({input:e.target.value})
+        //     }
+
+        //     render() {
+        //         return <div>
+        //             <h1>{this.state.title}</h1>
+        //             <p><input type="text" value={this.state.input} onChange={this.inputHandler}/><button onClick={this.addHandler}>Add</button></p>
+        //             <ul>{this.state.list.map((item) => {
+        //                 return <li key={item.id} className={item.done ? 'done' : ''}>
+        //                     <input type="checkbox" checked={item.done} onChange={() => this.completeHandler(item.id)} />
+        //                     {item.text}<button onClick={() => this.deleteHandler(item.id)}>Delete</button>
+        //                 </li>
+        //             })}
+        //             </ul>
+        //         </div>
+        //     }
+        // }
+
+
+        const root = ReactDOM.createRoot(document.getElementById('app'));
+        const listItem =
+            root.render(
+
+                <ToDoList />
+
+
+            );
+
+    </script>
+</body>
+
+</html>
