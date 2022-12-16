@@ -3,7 +3,8 @@
 ## 密碼：123456
 ## 驗證碼 ：888888
 
-DEMO 網址：react-back-login-lk9fm8w0v-supermarpig.vercel.app
+DEMO 網址：
+http://react-back-login-lk9fm8w0v-supermarpig.vercel.app
 
 
 
