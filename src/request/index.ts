@@ -19,7 +19,7 @@ instance.interceptors.request.use(config => {
 // 響應攔截器
 instance.interceptors.response.use( res => {
 
-    return  res . data
+    return  res.data
 }, err => {
     return  Promise.reject ( err )
 })

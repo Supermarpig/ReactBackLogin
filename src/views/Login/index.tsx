@@ -6,12 +6,13 @@ import 'antd/dist/antd.css';
 import './login.less'
 import {useNavigate} from "react-router-dom"
 import { CaptchaAPI ,LoginAPI} from "@/request/api";
+import ReCAPTCHA from "react-google-recaptcha";
+
 const view =()=>{
     let navigateTo =useNavigate();
 
     //加載完這個組件之後，需要初始化
     useEffect(()=>{
-
         getCaptchaImg();
         initLoginBg();
         window.onresize = function(){initLoginBg()};//假設畫面變動時，在自適應畫面
@@ -76,7 +77,7 @@ const view =()=>{
     //          console.log(res);
     // })
         let captchaAPIRes = await CaptchaAPI();
-        // console.log(CaptchaAPIRes);
+        console.log(captchaAPIRes);
         if(captchaAPIRes.code===200){
         //1.把圖片數據顯示在img上面
         setcaptchaImg("data:image/gif;base64,"+captchaAPIRes.img)
@@ -95,7 +96,7 @@ const view =()=>{
             <div className={styles.loginBox+ " loginbox"}>
                     {/* 標題部分 */}
                     <div className={styles.title}>
-                    <h1>練習用&nbsp;·&nbsp;通用後台系統</h1>
+                    <h1>通用後台系統</h1>
                     <p>Strive Everyday</p>
                     </div>
                     {/* 表單部分 */}
@@ -109,6 +110,7 @@ const view =()=>{
                                 <img height="38" src={captchaImg} alt="" />
                             </div>
                         </div>
+                         {/* <ReCAPTCHA sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI" ></ReCAPTCHA> */}
                         <Button type="primary" className="loginBtn" block onClick={gotoLogin}>登錄</Button>
                     </Space>
 
