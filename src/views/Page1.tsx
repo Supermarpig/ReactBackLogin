@@ -1,5 +1,7 @@
 import {useSelector,useDispatch} from "react-redux";
-import numStatus from "@/store/NumStatus"
+import numStatus from "@/store/NumStatus";
+import {  Button     } from 'antd';
+
 
 const View =()=>{
 //通過useDispath修改倉庫數據
@@ -42,11 +44,12 @@ const {num,sarr} =useSelector((state:RootState)=>({
         <div className="home">
             <p>這是Page1頁面內容</p>
             <p>{num}</p>
-            <button onClick={changeNum}>同步按鈕</button>
-            <button onClick={changeNum2}>異步按鈕</button>
+            
+            <Button  onClick={changeNum}>同步按鈕</Button >
+            <Button  onClick={changeNum2}>異步按鈕</Button >
 
             <p>{sarr}</p>
-            <button onClick={changeArr}>按鈕</button>
+            <Button  onClick={changeArr}>Array 新增按鈕</Button >
         </div>
     )
 }

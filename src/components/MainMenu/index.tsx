@@ -15,7 +15,7 @@ type MenuItem = Required<MenuProps>['items'][number];
 //登入請求到數據之後，就可以跟item這個數組進行匹配
 const items: MenuItem[] = [
   {
-    label:'欄位 1',
+    label:'同步 異步按鈕',
     key: '/Page1',
     icon: <PieChartOutlined />,
   },
@@ -60,7 +60,7 @@ const items: MenuItem[] = [
     ]
   },
   {
-    label:'欄位 5',
+    label:'登出',
     key: '/Page5',
     icon: <FileOutlined />,
   },

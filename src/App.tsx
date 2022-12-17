@@ -8,7 +8,6 @@ function ToLogin(){
   const navagateTo=useNavigate();
   //加載完這個組件之後實現跳轉
   useEffect(()=>{
-
    //加載完組件之後，執行這邊的代碼
    navagateTo("/login")
    message.warning("您還沒有登陸 ，請登錄後再訪問")
@@ -20,7 +19,6 @@ function ToPage1(){
   const navagateTo=useNavigate();
   //加載完這個組件之後實現跳轉
   useEffect(()=>{
-
     //加載完組件之後，執行這邊的代碼
     navagateTo("/page1")
     message.warning("您已經登錄過了!!")
@@ -41,18 +39,11 @@ function BeforeRouterEnter(){
     //這裡不能直接useNavigete 來實現跳轉，因為需要BeforeRoutterEnter是一個JSX組件
     return <ToPage1/>
   }
-
   //2.如果訪問的不是登錄頁面，並且沒有token，跳轉到登錄頁面
   if (location.pathname !=="/login" && !token){
     return <ToLogin/>
   }
-
   //3.其餘的都可以正常放行
-
-
-
-
-
   return outlet
 }
 
