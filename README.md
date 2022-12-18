@@ -1,9 +1,11 @@
 
-## 登錄測試帳號：qdtest1
-## 密碼：123456
-## 驗證碼 ：888888
+### 登錄測試帳號：qdtest1
+### 密碼：123456
+### 驗證碼 ：888888
 
+https://react-back-login-5ckv73hnn-supermarpig.vercel.app
 
+https://s19.aconvert.com/convert/p3r68-cdx67/q9tt0-a3i5m.webm
 
 UI組件庫 使用 Ant Design of React
 
@@ -3145,3 +3147,19 @@ export default App
 這樣一個基本的後端登錄畫面就做完了~
 
 灑花~~~~~~~
+
+
+
+------------------------------------------------------------------
+# 修改驗證碼API
+
+部屬網站Vercel 
+發現 目前這個測試網站 連不進去  在DEMO的時候不會顯示 ，可是在本地是正常的。
+問題好像是因為請求不了 > 口 < 
+
+原網址的請求位置是 http://xue.cnkdl.cn:23683
+
+但是 請求必須是 Https 才可以
+
+解決方法： CORS
+
