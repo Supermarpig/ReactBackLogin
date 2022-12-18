@@ -1,5 +1,19 @@
 import  axios  from  "axios"
 
+// module.exports = async (req: { query: { start: any; count: any } }, res: { json: (arg0: { status: string; data: any }) => void }) => {
+//     const start = req.query.start ? req.query.start : 0
+//     const count = req.query.count ? req.query.count : 1
+  
+//     const result = await axios({
+//       method: 'get',
+//       url: `http://cn.bing.com/HPImageArchive.aspx?format=js&idx=${start}&n=${count}`
+//     })
+  
+//     res.json({
+//       status: 'ok',
+//       data: result.data
+//     })
+//   }
 // 創建axios實例
 const  instance  =  axios.create ({
     // 基本請求路徑的抽取
