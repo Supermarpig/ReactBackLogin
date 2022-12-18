@@ -11,7 +11,7 @@
 #### 輸入成功後 ，在網址欄輸入返回login 會顯示 你已經登錄過囉
 ![image](https://github.com/Supermarpig/ReactBackLogin/blob/main/src/img/login3.gif)
 #### 登出時，會清空token 返回Login頁面
-![image](https://github.com/Supermarpig/ReactBackLogin/blob/main/src/img/login4.gif)
+![image](https://github.com/Supermarpig/ReactBackLogin/blob/main/src/img/logout.gif)
 
 UI組件庫 使用 Ant Design of React
 
