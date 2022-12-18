@@ -9,9 +9,9 @@
 #### 輸入成功跳轉至首頁 先讀取驗證碼的uuid確認相符後  進入主畫面並清除uuid 及紀錄token Value
 ![image](https://github.com/Supermarpig/ReactBackLogin/blob/main/src/img/login2.gif)
 #### 輸入成功後 ，在網址欄輸入返回login 會顯示 你已經登錄過囉
-![image](https://github.com/Supermarpig/ReactBackLogin/blob/main/src/img/login2.gif)
+![image](https://github.com/Supermarpig/ReactBackLogin/blob/main/src/img/login3.gif)
 #### 登出時，會清空token 返回Login頁面
-![image](https://github.com/Supermarpig/ReactBackLogin/blob/main/src/img/login2.gif)
+![image](https://github.com/Supermarpig/ReactBackLogin/blob/main/src/img/login4.gif)
 
 UI組件庫 使用 Ant Design of React
 
