@@ -9,5 +9,25 @@
           { "key": "Access-Control-Allow-Headers", "value": "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version" }
         ]
       }
+    ],
+    "name": "realwds-api",
+    "version": 2,
+    "routes": [
+      {
+        "src": "/",
+        "headers": {
+          "cache-control": "no-cache, no-store, must-revalidate",
+          "Access-Control-Allow-Origin": "*"
+        },
+        "dest": "/api"
+      },
+      {
+        "src": "/bing",
+        "headers": {
+          "cache-control": "no-cache, no-store, must-revalidate",
+          "Access-Control-Allow-Origin": "*"
+        },
+        "dest": "/api/bing/"
+      }
     ]
   }
