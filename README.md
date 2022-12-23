@@ -2256,6 +2256,7 @@ export default {
 }
 ```
 
+                
 再來將 reducer.ts 中修改成模塊 
 
 代碼如下：
@@ -2306,7 +2307,9 @@ export default reducer
     add1:"add1",
     add2:"add2",
 ```
+                
 在把Reducer.ts 修改成
+                
 ```
 switch(action.type){
         case handleNum.add1:
@@ -2328,6 +2331,7 @@ switch(action.type){
 內容修改成
 array.push樣式
 如下：
+                
 ```
 export default {
     state:{
@@ -2346,9 +2350,11 @@ export default {
 }
 
 ```
+                
 
 寫好然後回到 reducer 進行引入
 
+                
 ```
 import handleArr from "./index"
 
@@ -2376,6 +2382,7 @@ export default reducer
 
 ```
 
+                
 ------------------------------------------------------------------------------------------------------
 # 優化Switch ...case... 代碼
 
@@ -2387,6 +2394,7 @@ switch 的作法是拿的 action.type和case後面的每一個進行對比，這
 把add:"add1"
 修改成Obj格式
 
+                
 ```
    //名字統一管理
     // add1:"add1",
@@ -2397,8 +2405,10 @@ switch 的作法是拿的 action.type和case後面的每一個進行對比，這
     }
 ```
 
+                
 再去reducer.ts把switch.case修改如下：
 
+                
 ```
 import handleNum from "./index"
 
@@ -2445,6 +2455,7 @@ let reducer = (state ={...handleNum.state},action:{type:string,val:number})=>{
 export default reducer
 ```
 
+                
 這樣就完成reducer.ts 的優化拉~
 
 # 接下來 來優化index.ts的檔案
